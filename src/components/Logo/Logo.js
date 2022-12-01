@@ -14,6 +14,11 @@ const Logo = (props) => {
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
+  position: absolute;
+  left: 32px;
+  bottom: 51%;
+  transform: translateY(49%);
+  /* border: solid green; */
 `;
 
 const Wrapper = styled.h1`

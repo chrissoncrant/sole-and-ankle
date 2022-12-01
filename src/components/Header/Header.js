@@ -21,17 +21,44 @@ const Header = () => {
           <NavLink href="/kids">Kids</NavLink>
           <NavLink href="/collections">Collections</NavLink>
         </Nav>
+        <Spacer />
       </MainHeader>
     </header>
   );
 };
 
+const Spacer = styled.div`
+  width: 160px;
+`
 const MainHeader = styled.div`
-  padding: 0 32px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-inline: 32px;
+  padding-top: 21px;
+  padding-bottom: 23px;
   border-bottom: 1px solid ${COLORS.gray[300]};
+  /* border: solid red; */
+
 `;
 
-const Nav = styled.nav``;
+const Nav = styled.nav`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  padding-left: 160px;
+  width: 100%;
+  gap: 12px;
+  /* border: solid; */
+
+  @media (max-width: 768px) {
+    display: none;
+
+    ${Spacer} {
+      display: none;
+    }
+  }
+`;
 
 const NavLink = styled.a`
   font-size: 1.125rem;
@@ -39,6 +66,7 @@ const NavLink = styled.a`
   text-decoration: none;
   color: ${COLORS.gray[900]};
   font-weight: ${WEIGHTS.medium};
+  /* border: solid brown; */
 
   &:first-of-type {
     color: ${COLORS.secondary};
