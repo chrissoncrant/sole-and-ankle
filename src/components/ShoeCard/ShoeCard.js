@@ -36,6 +36,7 @@ const ShoeCard = ({
       <Wrapper>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
+          <Tag bcolor={"yellow"}>{variant}</Tag>
         </ImageWrapper>
         <Spacer size={12} />
         <Row>
@@ -53,15 +54,28 @@ const ShoeCard = ({
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
+  flex: 1 250px;
 `;
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+`;
 
 const ImageWrapper = styled.div`
   position: relative;
 `;
 
-const Image = styled.img``;
+const Tag = styled.div`
+  position: absolute;
+  top: 12px;
+  right: -5px;
+  padding: 4px 16px;
+  background-color: green;
+  color: ${prop => prop.bcolor};
+`;
+
+const Image = styled.img`
+  max-width: 100%;
+`;
 
 const Row = styled.div`
   font-size: 1rem;
