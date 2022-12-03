@@ -28,7 +28,7 @@ const Wrapper = styled.div`
   font-size: 0.875rem;
   color: ${COLORS.gray[300]};
   background-color: ${COLORS.gray[900]};
-  padding: 12px 32px;
+  padding-inline: 32px;
   
 
   @media (max-width: 768px) {
@@ -40,6 +40,8 @@ const HiderWrapper = styled.div `
   display: flex;
   gap: 24px;
   align-items: center;
+  height: 40px;
+
   @media (max-width: 768px) {
     display: none;
   }
