@@ -37,6 +37,9 @@ const ShoeCard = ({
       bgColor: '#C5295D',
       display: 'block',
       text: 'On Sale!',
+      strike: 'line-through',
+      saleColor: '#C5295D',
+      oldPriceColor: COLORS.gray['700']
     },
     newRelease: {
       bgColor: '#6868D9',
@@ -56,7 +59,6 @@ const ShoeCard = ({
     : TAGSTYLES.newRelease
   ;
 
-  console.log(tagDisplay)
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
@@ -67,10 +69,11 @@ const ShoeCard = ({
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price>{formatPrice(price)}</Price>
+          <Price strike={tagDisplay} onSale={variant}>{formatPrice(price)}</Price>
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          <SalePrice onSale={variant}>{formatPrice(salePrice)}</SalePrice>
         </Row>
       </Wrapper>
     </Link>
@@ -80,7 +83,8 @@ const ShoeCard = ({
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
-  flex: 1 250px;
+  flex: 1 275px;
+  /* max-width: 300px; */
 `;
 
 const Wrapper = styled.article`
@@ -99,14 +103,18 @@ const Tag = styled.div`
   background-color: ${props => props.show.bgColor};
   color: ${COLORS.white};
   border-radius: 3px;
+  font-size: ${14/ 18}rem;
 `;
 
 const Image = styled.img`
   max-width: 100%;
+  border-radius: 12px;
 `;
 
 const Row = styled.div`
   font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Name = styled.h3`
@@ -114,13 +122,21 @@ const Name = styled.h3`
   color: ${COLORS.gray[900]};
 `;
 
-const Price = styled.span``;
+const Price = styled.span`
+  text-decoration: ${props => props.strike.strike};
+  color: ${props => props.onSale === 'on-sale' ? COLORS.gray[700] : 'black'
+  }
+`;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
 `;
 
 const SalePrice = styled.span`
+  display: ${props => {
+    console.log('YOOOO', props.onSale)
+    return props.onSale === 'on-sale' ? 'block' : 'none';
+  }};
   font-weight: ${WEIGHTS.medium};
   color: ${COLORS.primary};
 `;
