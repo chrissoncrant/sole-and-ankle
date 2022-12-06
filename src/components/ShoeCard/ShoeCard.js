@@ -32,48 +32,27 @@ const ShoeCard = ({
       : 'default'
   ;
 
-  const TAGSTYLES = {
-    onSale: {
-      bgColor: '#C5295D',
-      display: 'block',
-      text: 'On Sale!',
-      strike: 'line-through',
-      saleColor: '#C5295D',
-      oldPriceColor: COLORS.gray['700']
-    },
-    newRelease: {
-      bgColor: '#6868D9',
-      display: 'block',
-      text: 'Just Released!'
-    },
-    default: {
-      bgColor: '#6868D9',
-      display: 'none',
-    }
-  }
-
-  const tagDisplay = variant === "default" 
-    ? TAGSTYLES.default 
-    : variant === "on-sale" 
-    ? TAGSTYLES.onSale
-    : TAGSTYLES.newRelease
-  ;
-
+  
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
-          <Tag show={tagDisplay}>{tagDisplay.text}</Tag>
+          {variant === 'on-sale' && <SaleTag>Sale</SaleTag>}
+          {variant === 'new-release' && <ReleasedTag>Just Released!</ReleasedTag>}
         </ImageWrapper>
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price strike={tagDisplay} onSale={variant}>{formatPrice(price)}</Price>
+          <Price 
+            style={{
+              '--color': variant === 'on-sale' && COLORS.gray[700],
+              '--strike': variant === 'on-sale' && 'line-through'
+            }}>{formatPrice(price)}</Price>
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
-          <SalePrice onSale={variant}>{formatPrice(salePrice)}</SalePrice>
+          {variant === 'on-sale' ? <SalePrice>{formatPrice(salePrice)}</SalePrice> : null}
         </Row>
       </Wrapper>
     </Link>
@@ -95,16 +74,26 @@ const ImageWrapper = styled.div`
 `;
 
 const Tag = styled.div`
-  display: ${props => props.show.display};
   position: absolute;
   top: 12px;
   right: -5px;
-  padding: 4px 16px;
-  background-color: ${props => props.show.bgColor};
-  color: ${COLORS.white};
+  height: 32px;
+  line-height: 32px;
+  padding-inline: 10px;
   border-radius: 3px;
   font-size: ${14/ 18}rem;
+  background-color: green;
+  font-weight: ${WEIGHTS.bold};
+  color: ${COLORS.white};
 `;
+
+const SaleTag = styled(Tag)`
+  background-color: ${COLORS.primary};
+`
+
+const ReleasedTag = styled(Tag)`
+  background-color: ${COLORS.secondary};
+`
 
 const Image = styled.img`
   max-width: 100%;
@@ -123,9 +112,8 @@ const Name = styled.h3`
 `;
 
 const Price = styled.span`
-  text-decoration: ${props => props.strike.strike};
-  color: ${props => props.onSale === 'on-sale' ? COLORS.gray[700] : 'black'
-  }
+  color: var(--color);
+  text-decoration: var(--strike);
 `;
 
 const ColorInfo = styled.p`
@@ -133,11 +121,6 @@ const ColorInfo = styled.p`
 `;
 
 const SalePrice = styled.span`
-  display: ${props => {
-    console.log('YOOOO', props.onSale)
-    return props.onSale === 'on-sale' ? 'block' : 'none';
-  }};
-  font-weight: ${WEIGHTS.medium};
   color: ${COLORS.primary};
 `;
 
